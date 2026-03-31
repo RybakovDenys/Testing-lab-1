@@ -51,4 +51,24 @@ class TestFoxtrot:
         )
         assert login_modal.is_displayed()
 
+    def test_brand_filter_applies_correctly(self):
+        search_input = self.wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='search']"))
+        )
+        search_input.send_keys("Телевізори")
+        self.driver.find_element(By.CSS_SELECTOR, ".header-search__button").click()
+
+        samsung_checkbox = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@data-token='samsung']/parent::label"))
+        )
+
+        samsung_checkbox.click()
+        
+        self.wait.until(EC.url_contains("samsung")) 
+
+        first_product_title = self.wait.until(
+            EC.presence_of_element_located((By.CLASS_NAME, "product-card__title"))
+        )
+        assert "SAMSUNG" in first_product_title.text
+
     
