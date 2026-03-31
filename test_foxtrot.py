@@ -14,3 +14,16 @@ class TestFoxtrot:
     def teardown_method(self):
         self.driver.quit()
 
+    def test_search_functionality(self):
+        search_input = self.wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='search']"))
+        )
+        search_input.send_keys("MacBook")
+        
+        search_button = self.driver.find_element(By.CSS_SELECTOR, ".header-search__button")
+        search_button.click()
+        
+        result_title = self.wait.until(
+            EC.presence_of_element_located((By.TAG_NAME, "h1"))
+        )
+        assert "MacBook" in result_title.text
