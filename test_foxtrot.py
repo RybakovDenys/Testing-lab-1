@@ -71,4 +71,25 @@ class TestFoxtrot:
         )
         assert "SAMSUNG" in first_product_title.text
 
-    
+    def test_change_city_in_header(self):
+        header_city_btn = self.wait.until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "header__sub-region"))
+        )
+        header_city_btn.click()
+
+        city_input = self.wait.until(
+            EC.visibility_of_element_located((By.ID, "city-search"))
+        )
+        city_input.send_keys("Львівське")
+
+        city_result = self.wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//ul[contains(@class, 'popup__cities')]//span[contains(text(), 'Львівське')]"))
+        )
+        city_result.click()
+
+        self.wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, "popup__cities")))
+
+        city_updated = self.wait.until(
+            EC.text_to_be_present_in_element((By.CLASS_NAME, "header__sub-region"), "Львівське")
+        )
+        assert city_updated is True
