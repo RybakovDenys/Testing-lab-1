@@ -27,3 +27,17 @@ class TestFoxtrot:
             EC.presence_of_element_located((By.TAG_NAME, "h1"))
         )
         assert "MacBook" in result_title.text
+
+
+    def test_cart_modal_opens(self):
+        cart_icon = self.wait.until(
+            EC.presence_of_element_located((By.CLASS_NAME, "header-basket"))
+        )
+        cart_icon.click()
+        
+        cart_modal = self.wait.until(
+            EC.visibility_of_element_located((By.ID, "empty-cart-popup"))
+        )
+        assert cart_modal.is_displayed()
+
+    
