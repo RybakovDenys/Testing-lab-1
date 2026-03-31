@@ -40,4 +40,15 @@ class TestFoxtrot:
         )
         assert cart_modal.is_displayed()
 
+    def test_login_modal_opens(self):
+        login_icon = self.wait.until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "header__sub-user"))
+        )
+        login_icon.click()
+        
+        login_modal = self.wait.until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "auth"))
+        )
+        assert login_modal.is_displayed()
+
     
